@@ -1,0 +1,150 @@
+# ============================================================
+#  .gitignore - Programación II
+#  Proyectos y subproyectos: Python | Django | Odoo
+#  Los patrones sin "/" inicial aplican en TODAS las subcarpetas
+# ============================================================
+ 
+# ------------------------------------------------------------
+# PYTHON
+# ------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+.eggs/
+build/
+dist/
+wheels/
+pip-wheel-metadata/
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+ 
+# Pruebas y cobertura
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+.pytype/
+ 
+# Jupyter
+.ipynb_checkpoints/
+ 
+# ------------------------------------------------------------
+# ENTORNOS VIRTUALES (en cualquier carpeta)
+# ------------------------------------------------------------
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+virtualenv/
+.python-version
+Pipfile.lock
+ 
+# ------------------------------------------------------------
+# VARIABLES DE ENTORNO Y SECRETOS
+# ------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+ 
+# ------------------------------------------------------------
+# DJANGO
+# ------------------------------------------------------------
+*.log
+db.sqlite3
+db.sqlite3-journal
+local_settings.py
+media/
+staticfiles/
+static_root/
+/static_collected/
+celerybeat-schedule
+celerybeat.pid
+ 
+# Descomenta si NO quieres versionar las migraciones
+# **/migrations/*.py
+# !**/migrations/__init__.py
+ 
+# ------------------------------------------------------------
+# ODOO
+# ------------------------------------------------------------
+# Configuración local (contiene contraseñas de BD y admin)
+odoo.conf
+*.conf.local
+.odoorc
+.openerp_serverrc
+ 
+# Datos generados por Odoo (adjuntos, sesiones)
+filestore/
+sessions/
+.local/share/Odoo/
+data_dir/
+ 
+# Código fuente de Odoo descargado (solo versionamos nuestros módulos)
+odoo-src/
+odoo/odoo/
+enterprise/
+ 
+# Respaldos de bases de datos
+*.dump
+*.backup
+*.sql
+*.sql.gz
+*.zip
+ 
+# ------------------------------------------------------------
+# EDITORES E IDEs
+# ------------------------------------------------------------
+.vscode/
+!.vscode/settings.json.example
+.idea/
+*.iml
+*.sublime-project
+*.sublime-workspace
+.spyderproject
+.spyproject
+.ropeproject
+*.swp
+*.swo
+*~
+ 
+# ------------------------------------------------------------
+# SISTEMA OPERATIVO
+# ------------------------------------------------------------
+# Linux
+.directory
+.Trash-*
+.nfs*
+# macOS
+.DS_Store
+._*
+# Windows
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+ 
+# ------------------------------------------------------------
+# OTROS
+# ------------------------------------------------------------
+*.tmp
+*.bak
+tmp/
+temp/
+node_modules/
+ 
