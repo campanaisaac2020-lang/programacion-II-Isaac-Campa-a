@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+.venv/
+__pycache__/
+=======
 # ============================================================
 #  .gitignore - Programación II
 #  Proyectos y subproyectos: Python | Django | Odoo
@@ -147,3 +151,4 @@ $RECYCLE.BIN/
 tmp/
 temp/
 node_modules/
+>>>>>>> origin/main
