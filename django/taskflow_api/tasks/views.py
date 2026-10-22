@@ -43,3 +43,12 @@ def my_first_template(request):
         "mensaje": "Organiza tus proyectos y tareas en un solo lugar",
     }
     return render(request, "tasks/my_first_template.html", contexto)
+
+
+def leads_like(request):
+    contexto = {
+        "titulo": "Programador",
+        "nombre": "Isaac Alejandro",
+        "apellido": "Campaña Camacho",
+    }
+    return render(request, "tasks/leads_like.html", contexto)

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Like a Pro With Logan Pierce</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Poppins & Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            cyan: '#00d2ff',
+                            blue: '#0072ff',
+                            darkBlue: '#1e1b4b',
+                            purple: '#2e0854',
+                            deepIndigo: '#121033',
+                            accentCyan: '#38ef7d'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom styles for gradients, organic shapes, and background effects */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Hero Background Gradient & Fluid Organic Waves */
+        .hero-container {
+            background: linear-gradient(135deg, #1a103c 0%, #29125f 40%, #1e1b4b 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wave-top-left {
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(0,210,255,0.8) 0%, rgba(0,114,255,0.4) 50%, rgba(0,0,0,0) 70%);
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            filter: blur(20px);
+            z-index: 1;
+        }
+
+        .wave-bottom-left {
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 320px;
+            height: 320px;
+            background: linear-gradient(135deg, #00d2ff 0%, #0072ff 100%);
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            z-index: 1;
+        }
+
+        .hero-circle-bg {
+            position: absolute;
+            right: -5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.4) 0%, rgba(30, 27, 75, 0.1) 70%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        /* Gradient Button Styles */
+        .btn-gradient {
+            background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-gradient:hover {
+            background: linear-gradient(90deg, #0ea5e9 0%, #1d4ed8 100%);
+            box-shadow: 0 10px 20px -5px rgba(56, 189, 248, 0.5);
+            transform: translateY(-1px);
+        }
+
+        /* Card with dark image background */
+        .dark-card-bg {
+            background: linear-gradient(rgba(18, 16, 51, 0.85), rgba(18, 16, 51, 0.92)), 
+                        url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+        }
+
+        /* Card Gradient */
+        .gradient-card {
+            background: linear-gradient(135deg, #38bdf8 0%, #2563eb 50%, #1e1b4b 100%);
+        }
+
+        /* Input overlay styling */
+        .glass-input {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+        }
+
+        .glass-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .glass-input:focus {
+            outline: none;
+            border-color: #38bdf8;
+            background: rgba(255, 255, 255, 0.18);
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased">
+
+    <!-- ================= HERO SECTION ================= -->
+    <section class="hero-container text-white pt-12 pb-16 lg:pt-20 lg:pb-24 px-4 sm:px-6 lg:px-12 relative">
+        <!-- Background Organic Wave Shapes -->
+        <div class="wave-top-left pointer-events-none"></div>
+        <div class="wave-bottom-left pointer-events-none"></div>
+        <div class="hero-circle-bg pointer-events-none hidden md:block"></div>
+
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Left Content Column -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-white">
+                        {{ titulo }} <br class="hidden sm:inline"/>{{ nombre }} {{ apellido }}
+                    </h1>
+                    
+                    <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
+                        Join thousands of leaders who have unlocked their true potential and achieved remarkable success.
+                    </p>
+
+                    <!-- Form Section -->
+                    <div class="pt-2">
+                        <form onsubmit="event.preventDefault();" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto lg:mx-0">
+                            <input 
+                                type="email" 
+                                placeholder="Email*" 
+                                required
+                                class="glass-input text-white px-5 py-3.5 rounded-full w-full sm:w-2/3 text-sm focus:ring-2 focus:ring-cyan-400 transition-all duration-200"
+                            >
+                            <button 
+                                type="submit" 
+                                class="btn-gradient text-white font-semibold px-6 py-3.5 rounded-full text-sm whitespace-nowrap shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 cursor-pointer"
+                            >
+                                Get My Free Course
+                            </button>
+                        </form>
+                        
+                        <p class="text-xs text-slate-300 mt-3 font-normal">
+                            <span class="underline cursor-pointer hover:text-cyan-300 transition-colors">Sign up</span> now to receive your <span class="font-bold text-white">FREE</span> mini-course on <span class="font-semibold text-white">"Mastering Public Speaking"</span>.
+                        </p>
+                    </div>
+
+                    <!-- Program Link CTA -->
+                    <div class="pt-6">
+                        <a href="#programs" class="inline-flex items-center text-lg font-bold text-white hover:text-cyan-300 transition-colors group">
+                            Find the Right <span class="text-blue-400 group-hover:text-cyan-300 mx-1.5 underline decoration-cyan-400 underline-offset-4">Program</span> Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Image Column (Professional Portrait) -->
+                <div class="lg:col-span-5 relative flex justify-center items-end mt-8 lg:mt-0">
+                    <div class="relative w-full max-w-md lg:max-w-none">
+                        <!-- Portrait Image cutout effect simulation -->
+                        <img 
+                            src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80" 
+                            alt="Logan Pierce - Leadership Coach" 
+                            class="w-full h-auto object-cover rounded-2xl shadow-2xl lg:bg-transparent"
+                            style="mask-image: linear-gradient(to bottom, black 80%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);"
+                            onerror="this.onerror=null; this.src='https://placehold.co/600x700/1e1b4b/ffffff?text=Logan+Pierce';"
+                        />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================= FEATURES / GRID SECTION ================= -->
+    <section id="programs" class="py-16 sm:py-20 px-4 sm:px-6 lg:px-12 bg-slate-100">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+                
+                <!-- Left Dark Highlight Card -->
+                <div class="lg:col-span-4 dark-card-bg text-white rounded-3xl p-8 sm:p-10 flex flex-col justify-between shadow-xl min-h-[420px]">
+                    <div class="space-y-6">
+                        <h2 class="text-3xl sm:text-4xl font-bold leading-tight tracking-tight">
+                            Leadership <br/>With Logan: <br/>Why It <br/>Works
+                        </h2>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed font-light">
+                            Ready to take your leadership to the next level?
+                        </p>
+                    </div>
+
+                    <div class="space-y-6 mt-8">
+                        <p class="text-base font-semibold text-white">
+                            Let's Make it Happen!
+                        </p>
+                        <a href="#" class="inline-block btn-gradient text-white font-medium text-xs sm:text-sm px-7 py-3 rounded-full shadow-md hover:shadow-lg transition-all">
+                            My Programs
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right 2x2 Grid Section -->
+                <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    
+                    <!-- Card 1: Proven Expertise -->
+                    <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-center text-center border border-slate-100">
+                        <div class="w-14 h-14 rounded-2xl bg-cyan-50 text-cyan-500 flex items-center justify-center mb-6 text-2xl">
+                            <i class="fa-solid fa-mountain-sun"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Proven Expertise</h3>
+                        <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                            With over a decade of experience coaching executives, entrepreneurs, and teams, I've helped leaders at all levels unlock their full potential and achieve breakthrough results.
+                        </p>
+                    </div>
+
+                    <!-- Card 2: Real-World Impact -->
+                    <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-center text-center border border-slate-100">
+                        <div class="w-14 h-14 rounded-2xl bg-cyan-50 text-cyan-500 flex items-center justify-center mb-6 text-2xl">
+                            <i class="fa-solid fa-earth-americas"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Real-World Impact</h3>
+                        <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                            My coaching goes beyond theory. I provide actionable strategies and mindset shifts that you can apply immediately to lead with confidence and inspire those around you.
+                        </p>
+                    </div>
+
+                    <!-- Card 3: Tailored Leadership Strategies -->
+                    <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-center text-center border border-slate-100">
+                        <div class="w-14 h-14 rounded-2xl bg-cyan-50 text-cyan-500 flex items-center justify-center mb-6 text-2xl">
+                            <i class="fa-solid fa-stairs"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Tailored Leadership Strategies</h3>
+                        <p class="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                            I don't believe in a one-size-fits-all approach. My coaching is personalized to your unique challenges, strengths, and goals, ensuring practical and sustainable growth.
+                        </p>
+                    </div>
+
+                    <!-- Card 4: Trusted by Professionals (Gradient Card) -->
+                    <div class="gradient-card text-white rounded-3xl p-8 shadow-md flex flex-col items-center text-center">
+                        <div class="w-14 h-14 rounded-2xl bg-white/10 text-cyan-200 flex items-center justify-center mb-6 text-2xl backdrop-blur-sm">
+                            <i class="fa-regular fa-eye"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-white">Trusted by Professionals</h3>
+                        <div class="w-8 h-0.5 bg-cyan-300 my-2 opacity-60"></div>
+                        <p class="text-slate-100 text-xs sm:text-sm leading-relaxed font-light mt-1">
+                            I've worked with Fortune 500 executives, high-performing teams, and emerging leaders worldwide, helping them navigate leadership challenges and create lasting success.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ================= LOWER SECTION (PARTIAL FROM DESIGN) ================= -->
+    <section class="py-16 bg-white text-center">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-6">
+                Leadership Coach,
+            </h2>
+            <div class="w-32 h-32 sm:w-40 sm:h-40 mx-auto rounded-full overflow-hidden border-4 border-cyan-400 shadow-xl mb-4">
+                <img 
+                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80" 
+                    alt="Logan Pierce Portrait" 
+                    class="w-full h-full object-cover"
+                    onerror="this.onerror=null; this.src='https://placehold.co/200x200/1e1b4b/ffffff?text=Logan';"
+                />
+            </div>
+            <p class="text-slate-600 max-w-xl mx-auto text-sm sm:text-base">
+                Empowering individuals and teams to reach peak performance through strategy, communication, and executive coaching.
+            </p>
+        </div>
+    </section>
+
+</body>
+</html>
