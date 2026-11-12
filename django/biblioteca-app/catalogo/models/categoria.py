@@ -8,6 +8,7 @@ class Categoria(models.Model):
         return self.nombre
 
     class Meta:
-        verbose_name_plural = "categorías"
-        verbose_name = "categoría"
+        verbose_name = "Categoría"
+        verbose_name_plural = "Categorías"
         ordering = ['nombre']
+        
