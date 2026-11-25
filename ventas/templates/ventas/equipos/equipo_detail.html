@@ -1,0 +1,12 @@
+{% extends 'ventas/base.html' %}
+{% block content %}
+<h1>{{ equipo }}</h1>
+<p>Marca: {{ equipo.marca }}</p>
+{% if equipo.categoria %}<p>Categoría: <a href="{% url 'categoria_detail' equipo.categoria.pk %}">{{ equipo.categoria }}</a></p>{% endif %}
+<p>Año: {{ equipo.anio }}</p>
+<p>Almacenamiento: {{ equipo.almacenamiento_gb }} GB</p>
+<p>Precio: {{ equipo.precio }}</p>
+<p>Disponibilidad: {{ equipo.get_estado_display }}</p>
+<p>{{ equipo.descripcion }}</p>
+<p><a href="{% url 'update_equipo' equipo.pk %}">Editar</a></p>
+{% endblock %}

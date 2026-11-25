@@ -1,0 +1,7 @@
+{% extends 'ventas/base.html' %}
+{% block content %}
+<h1>Venta de equipos móviles</h1>
+<p>Administra el catálogo de teléfonos y sus categorías.</p>
+<p><a href="{% url 'equipo_list' %}">Ver equipos</a></p>
+<p><a href="{% url 'categoria_list' %}">Ver categorías</a></p>
+{% endblock %}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipos móviles en venta</title>
+</head>
+<body>
+    <center>
+        <h1>Venta de equipos móviles</h1>
+        <h2>Equipos disponibles</h2>
+    </center>
+
+    <hr>
+
+    <p>
+        {% if perms.ventas.add_equipomovil %}
+            <button><a href="{% url 'create_equipo' %}">Añadir equipo</a></button>
+        {% endif %}
+        <button><a href="{% url 'home' %}">Inicio</a></button>
+    </p>
+
+    <hr>
+
+    <h3>Buscar equipos</h3>
+    <form method="GET">
+        <label for="pista">Buscar por marca, modelo o descripción:</label>
+        <input type="text" id="pista" name="pista" value="{{ pista }}">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <hr>
+
+    <table border="1" cellpadding="8" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Año</th>
+                <th>Almacenamiento</th>
+                <th>Precio</th>
+                <th>Unidades disponibles</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for equipo in equipos %}
+                <tr>
+                    <td>{{ equipo.marca }}</td>
+                    <td>{{ equipo.modelo }}</td>
+                    <td>{{ equipo.anio }}</td>
+                    <td>{{ equipo.almacenamiento_gb }} GB</td>
+                    <td>{{ equipo.precio }}</td>
+                    <td>{{ equipo.stock }}</td>
+                    <td>
+                        {% if perms.ventas.change_equipomovil %}
+                            <a href="{% url 'update_equipo' equipo.pk %}">Editar</a>
+                        {% endif %}
+                        {% if perms.ventas.delete_equipomovil %}
+                            |
+                            <a href="{% url 'delete_equipo' equipo.pk %}">Eliminar</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% if equipo.descripcion %}
+                    <tr>
+                        <td colspan="7"><strong>Descripción:</strong> {{ equipo.descripcion }}</td>
+                    </tr>
+                {% endif %}
+            {% empty %}
+                <tr>
+                    <td colspan="7" align="center">No hay equipos registrados.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="7" align="center">Total de equipos: {{ equipos|length }}</td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>
