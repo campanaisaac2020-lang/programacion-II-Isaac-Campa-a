@@ -4,6 +4,7 @@ from .models import Accesorio, Categoria, EquipoMovil, Marca
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
     list_display = ('nombre',)
+    list_filter = ('nombre',)
     search_fields = ('nombre', 'descripcion')
 
 @admin.register(EquipoMovil)
