@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect
 from ..forms import MarcaForm
@@ -25,8 +24,6 @@ def marca_detail(request, pk):
     return render(request, 'ventas/marcas/marca_detail.html', {'marca': marca})
 
 
-@login_required
-@permission_required('ventas.add_marca', raise_exception=True)
 def marca_create(request):
     form = MarcaForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
@@ -36,8 +33,6 @@ def marca_create(request):
     return render(request, 'ventas/marcas/formulario.html', {'form': form})
 
 
-@login_required
-@permission_required('ventas.change_marca', raise_exception=True)
 def marca_update(request, pk):
     marca = get_object_or_404(Marca, pk=pk)
     form = MarcaForm(request.POST or None, instance=marca)
@@ -48,8 +43,6 @@ def marca_update(request, pk):
     return render(request, 'ventas/marcas/formulario.html', {'form': form})
 
 
-@login_required
-@permission_required('ventas.delete_marca', raise_exception=True)
 def marca_delete(request, pk):
     marca = get_object_or_404(Marca, pk=pk)
     if request.method == 'POST':

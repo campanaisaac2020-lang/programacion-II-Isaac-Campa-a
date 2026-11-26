@@ -1,29 +1,26 @@
 {% extends 'ventas/base.html' %}
 {% block content %}
-<section class="catalog-hero">
-    <p class="eyebrow">CATÁLOGO DE CELULARES</p>
-    <h1>Marcas y equipos para tu próxima venta</h1>
-    <p>Consulta las marcas disponibles, revisa su información y administra el catálogo de teléfonos.</p>
-</section>
-<section class="brand-actions" aria-label="Acciones de marcas">
-    <article class="brand-card">
-        <h2>Agregar una marca</h2>
-        <p>Registra una marca con su descripción y estado de venta.</p>
-        {% if perms.ventas.add_marca %}
-            <a class="action-link" href="{% url 'marca_create' %}">Registrar marca</a>
-        {% else %}
-            <a class="action-link" href="{% url 'login' %}">Inicia sesión para registrar</a>
-        {% endif %}
-    </article>
-    <article class="brand-card">
-        <h2>Marcas disponibles</h2>
-        <p>{{ marcas_disponibles }} marcas habilitadas para la venta.</p>
-        <a class="action-link" href="{% url 'marca_disponibles' %}">Ver disponibles</a>
-    </article>
-    <article class="brand-card">
-        <h2>Administrar marcas</h2>
-        <p>Consulta detalles y, según tus permisos, edita o elimina marcas.</p>
-        <a class="action-link" href="{% url 'marca_list' %}">Abrir catálogo</a>
-    </article>
+<section class="simple-brands">
+    <h1>Marcas</h1>
+
+    <p class="brand-actions">
+        <a href="{% url 'marca_disponibles' %}">Ver disponibles</a>
+        <a href="{% url 'marca_create' %}">Agregar marca</a>
+    </p>
+
+    <ul class="brand-list">
+        {% for marca in marcas %}
+        <li>
+            <a href="{% url 'marca_detail' marca.pk %}">{{ marca.nombre }}</a>
+            {% if marca.disponible %}— Disponible{% else %}— No disponible{% endif %}
+            <span>
+                — <a href="{% url 'marca_update' marca.pk %}">Editar</a>
+                — <a href="{% url 'marca_delete' marca.pk %}">Eliminar</a>
+            </span>
+        </li>
+        {% empty %}
+        <li>No hay marcas agregadas.</li>
+        {% endfor %}
+    </ul>
 </section>
 {% endblock %}
