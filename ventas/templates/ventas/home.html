@@ -1,7 +1,29 @@
 {% extends 'ventas/base.html' %}
 {% block content %}
-<h1>Venta de equipos móviles</h1>
-<p>Administra el catálogo de teléfonos y sus categorías.</p>
-<p><a href="{% url 'equipo_list' %}">Ver equipos</a></p>
-<p><a href="{% url 'categoria_list' %}">Ver categorías</a></p>
+<section class="catalog-hero">
+    <p class="eyebrow">CATÁLOGO DE CELULARES</p>
+    <h1>Marcas y equipos para tu próxima venta</h1>
+    <p>Consulta las marcas disponibles, revisa su información y administra el catálogo de teléfonos.</p>
+</section>
+<section class="brand-actions" aria-label="Acciones de marcas">
+    <article class="brand-card">
+        <h2>Agregar una marca</h2>
+        <p>Registra una marca con su descripción y estado de venta.</p>
+        {% if perms.ventas.add_marca %}
+            <a class="action-link" href="{% url 'marca_create' %}">Registrar marca</a>
+        {% else %}
+            <a class="action-link" href="{% url 'login' %}">Inicia sesión para registrar</a>
+        {% endif %}
+    </article>
+    <article class="brand-card">
+        <h2>Marcas disponibles</h2>
+        <p>{{ marcas_disponibles }} marcas habilitadas para la venta.</p>
+        <a class="action-link" href="{% url 'marca_disponibles' %}">Ver disponibles</a>
+    </article>
+    <article class="brand-card">
+        <h2>Administrar marcas</h2>
+        <p>Consulta detalles y, según tus permisos, edita o elimina marcas.</p>
+        <a class="action-link" href="{% url 'marca_list' %}">Abrir catálogo</a>
+    </article>
+</section>
 {% endblock %}

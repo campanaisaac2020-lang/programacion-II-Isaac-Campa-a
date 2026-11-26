@@ -38,6 +38,22 @@ class EquipoMovilFormTests(TestCase):
 
 
 class PublicCatalogViewsTests(TestCase):
+    def test_home_shows_three_brand_actions(self):
+        user = User.objects.create_user(username='home-manager', password='test-pass')
+        permission = Permission.objects.get(
+            content_type__app_label='ventas',
+            codename='add_marca',
+        )
+        user.user_permissions.add(permission)
+        self.client.force_login(user)
+
+        response = self.client.get(reverse('home'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, reverse('marca_create'))
+        self.assertContains(response, reverse('marca_disponibles'))
+        self.assertContains(response, reverse('marca_list'))
+
     def test_authentication_pages_render(self):
         for route in ('login', 'registro'):
             with self.subTest(route=route):
