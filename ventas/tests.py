@@ -42,6 +42,8 @@ class PublicCatalogViewsTests(TestCase):
         for route in (
             'equipo_list',
             'categoria_list',
+            'marca_list',
+            'accesorio_list',
         ):
             with self.subTest(route=route):
                 response = self.client.get(reverse(route))
@@ -66,6 +68,14 @@ class PublicCatalogViewsTests(TestCase):
             response,
             f"{reverse('login')}?next={reverse('create_equipo')}",
         )
+
+    def test_logout_rejects_get_requests(self):
+        user = User.objects.create_user(username='logout-user', password='test-pass')
+        self.client.force_login(user)
+
+        response = self.client.get(reverse('logout'))
+
+        self.assertEqual(response.status_code, 405)
 
 
 class OwnershipPermissionTests(TestCase):

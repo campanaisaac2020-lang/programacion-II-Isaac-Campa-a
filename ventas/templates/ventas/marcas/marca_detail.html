@@ -1,2 +1,2 @@
 {% extends 'ventas/base.html' %}
-{% block content %}<h1>{{ marca }}</h1><p>País: {{ marca.pais_origen }}</p><p>Fundada: {{ marca.fundada }}</p>{% if perms.ventas.change_marca %}<p><a href="{% url 'marca_update' marca.pk %}">Editar</a></p>{% endif %}{% if perms.ventas.delete_marca %}<p><a href="{% url 'marca_delete' marca.pk %}">Eliminar</a></p>{% endif %}{% endblock %}
+{% block content %}<h1>{{ marca }}</h1><p>País: {{ marca.pais_origen }}</p><p>Fundada: {{ marca.fundada }}</p><h2>Equipos</h2><ul>{% for equipo in marca.equipos.all %}<li><a href="{% url 'equipo_detail' equipo.pk %}">{{ equipo }}</a></li>{% empty %}<li>Sin equipos</li>{% endfor %}</ul>{% endblock %}
