@@ -16,7 +16,11 @@ def registro(request):
             return redirect('home')
     else:
         form = RegistroForm()
-    return render(request, 'ventas/auth/registro.html', {'form': form})
+    return render(request, 'ventas/auth/formulario.html', {
+        'form': form,
+        'titulo': 'Registro',
+        'boton': 'Registrarse',
+    })
 
 
 def iniciar_sesion(request):
@@ -28,7 +32,11 @@ def iniciar_sesion(request):
             return redirect('home')
     else:
         form = AuthenticationForm(request)
-    return render(request, 'ventas/auth/login.html', {'form': form})
+    return render(request, 'ventas/auth/formulario.html', {
+        'form': form,
+        'titulo': 'Inicio de sesión',
+        'boton': 'Entrar',
+    })
 
 
 @require_POST

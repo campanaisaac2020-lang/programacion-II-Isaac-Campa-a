@@ -38,6 +38,12 @@ class EquipoMovilFormTests(TestCase):
 
 
 class PublicCatalogViewsTests(TestCase):
+    def test_authentication_pages_render(self):
+        for route in ('login', 'registro'):
+            with self.subTest(route=route):
+                response = self.client.get(reverse(route))
+                self.assertEqual(response.status_code, 200)
+
     def test_catalog_lists_are_public(self):
         for route in (
             'equipo_list',
@@ -136,3 +142,14 @@ class OwnershipPermissionTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, reverse('categoria_update', args=[self.categoria.pk]))
+
+    def test_category_delete_uses_shared_confirmation_template(self):
+        self.client.force_login(self.owner)
+
+        response = self.client.get(
+            reverse('categoria_delete', args=[self.categoria.pk])
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Eliminar categoría')
+        self.assertContains(response, reverse('categoria_list'))

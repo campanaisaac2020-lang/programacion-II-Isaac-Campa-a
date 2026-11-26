@@ -74,4 +74,8 @@ def equipo_delete(request, pk):
         equipo.delete()
         messages.success(request, 'Equipo eliminado exitosamente.')
         return redirect('equipo_list')
-    return render(request, 'ventas/equipos/equipo_confirm_delete.html', {'equipo': equipo})
+    return render(request, 'ventas/shared/confirmar_eliminacion.html', {
+        'titulo': 'Eliminar equipo',
+        'objeto': equipo,
+        'list_url': 'equipo_list',
+    })

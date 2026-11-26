@@ -65,4 +65,8 @@ def categoria_delete(request, pk):
         categoria.delete()
         messages.success(request, 'Categoría eliminada exitosamente.')
         return redirect('categoria_list')
-    return render(request, 'ventas/categorias/categoria_confirm_delete.html', {'categoria': categoria})
+    return render(request, 'ventas/shared/confirmar_eliminacion.html', {
+        'titulo': 'Eliminar categoría',
+        'objeto': categoria,
+        'list_url': 'categoria_list',
+    })
