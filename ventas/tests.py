@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.urls import reverse
 
 from .forms import EquipoMovilForm
-from .models import Categoria
+from .models import Categoria, Marca
 
 
 class EquipoMovilFormTests(TestCase):
@@ -153,3 +153,46 @@ class OwnershipPermissionTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Eliminar categoría')
         self.assertContains(response, reverse('categoria_list'))
+
+
+class MarcaCrudTests(TestCase):
+    def setUp(self):
+        group = Group.objects.create(name='marca_gestores')
+        permissions = Permission.objects.filter(
+            content_type__app_label='ventas',
+            codename__in=['add_marca', 'change_marca', 'delete_marca'],
+        )
+        group.permissions.set(permissions)
+        self.user = User.objects.create_user(username='marca-user', password='test-pass')
+        self.user.groups.add(group)
+        self.client.force_login(self.user)
+
+    def test_create_and_update_marca(self):
+        create_response = self.client.post(
+            reverse('marca_create'),
+            {'nombre': 'OnePlus', 'pais_origen': 'China', 'fundada': 2013},
+        )
+        marca = Marca.objects.get(nombre='OnePlus')
+        update_response = self.client.post(
+            reverse('marca_update', args=[marca.pk]),
+            {'nombre': 'OnePlus Mobile', 'pais_origen': 'China', 'fundada': 2013},
+        )
+
+        self.assertRedirects(create_response, reverse('marca_list'))
+        self.assertRedirects(update_response, reverse('marca_detail', args=[marca.pk]))
+        marca.refresh_from_db()
+        self.assertEqual(marca.nombre, 'OnePlus Mobile')
+
+    def test_delete_marca_requires_post(self):
+        marca = Marca.objects.create(
+            nombre='Nokia',
+            pais_origen='Finlandia',
+            fundada=1865,
+        )
+
+        confirm_response = self.client.get(reverse('marca_delete', args=[marca.pk]))
+        delete_response = self.client.post(reverse('marca_delete', args=[marca.pk]))
+
+        self.assertEqual(confirm_response.status_code, 200)
+        self.assertRedirects(delete_response, reverse('marca_list'))
+        self.assertFalse(Marca.objects.filter(pk=marca.pk).exists())
