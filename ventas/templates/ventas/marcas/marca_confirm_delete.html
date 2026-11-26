@@ -1,0 +1,2 @@
+{% extends 'ventas/base.html' %}
+{% block content %}<h1>Eliminar {{ marca }}</h1><form method="post">{% csrf_token %}<p>¿Confirmas la eliminación?</p><button type="submit">Eliminar</button></form>{% endblock %}

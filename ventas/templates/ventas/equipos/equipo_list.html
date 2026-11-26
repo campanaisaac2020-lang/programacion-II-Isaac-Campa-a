@@ -2,10 +2,10 @@
 {% block content %}
 <h1>Equipos móviles</h1>
 <form method="get"><input name="pista" value="{{ pista }}" placeholder="Buscar"><button>Buscar</button></form>
-<p><a href="{% url 'create_equipo' %}">Agregar equipo</a></p>
+{% if perms.ventas.add_equipomovil %}<p><a href="{% url 'create_equipo' %}">Agregar equipo</a></p>{% endif %}
 <table><thead><tr><th>Equipo</th><th>Categoría</th><th>Precio</th><th>Disponibilidad</th><th>Acciones</th></tr></thead><tbody>
 {% for equipo in equipos %}<tr><td><a href="{% url 'equipo_detail' equipo.pk %}">{{ equipo }}</a></td><td>{{ equipo.categoria }}</td><td>{{ equipo.precio }}</td><td>{{ equipo.get_estado_display }}</td><td>
-<a href="{% url 'update_equipo' equipo.pk %}">Editar</a> |
-<a href="{% url 'delete_equipo' equipo.pk %}">Eliminar</a>
+{% if perms.ventas.change_equipomovil %}<a href="{% url 'update_equipo' equipo.pk %}">Editar</a>{% endif %}
+{% if perms.ventas.delete_equipomovil %}| <a href="{% url 'delete_equipo' equipo.pk %}">Eliminar</a>{% endif %}
 </td></tr>{% empty %}<tr><td colspan="5">No hay equipos registrados.</td></tr>{% endfor %}</tbody></table>
 {% endblock %}

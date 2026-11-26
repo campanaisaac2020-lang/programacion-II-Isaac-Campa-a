@@ -1,26 +1,34 @@
-# Venta de equipos móviles
-Proyecto Django sencillo para administrar equipos de teléfonos y sus categorías. No requiere crear una cuenta para consultar o modificar el catálogo.
+# Venta de celulares
 
-## Modelos y relaciones
+Aplicación web desarrollada con Django para administrar celulares, categorías, marcas y accesorios.
 
-- `Categoria`: nombre y descripción de la categoría.
-- `EquipoMovil`: marca escrita como texto, modelo, categoría, año, almacenamiento, precio, fecha de lanzamiento, descripción y disponibilidad (`Disponible` o `No disponible`).
-- Cada equipo pertenece a una categoría. Desde el detalle de una categoría se puede ver sus equipos.
+## Relaciones
 
-## Levantar el proyecto desde cero
+- Categoría — Equipo móvil: ForeignKey, una categoría contiene varios equipos.
+- Marca — Equipo móvil: ForeignKey, una marca fabrica varios equipos.
+- Equipo móvil — Accesorio: ManyToMany.
+- Los registros tienen `creado_por` para aplicar propiedad.
 
-```powershell
-cd django/venta-celulares
-python -m pip install -r requirements.txt
+## Levantar el proyecto
+
+```bash
+cd venta-celulares
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
 python manage.py migrate
 python manage.py iniciar_demo
 python manage.py runserver
 ```
 
-Después abre `http://127.0.0.1:8000/`. No se necesita iniciar sesión para usar la aplicación.
+Abrir http://127.0.0.1:8000/.
 
 ## Datos de prueba
 
-El comando `python manage.py iniciar_demo` crea cinco categorías y cinco equipos de ejemplo. Se puede marcar cada teléfono como disponible o no disponible desde el formulario de creación o edición.
+`python manage.py iniciar_demo` crea 5 categorías, 5 marcas, 5 accesorios y 5 equipos.
 
-La aplicación incluye listados, detalles, creación, edición y eliminación de equipos y categorías.
+| Usuario | Contraseña | Grupo |
+|---|---|---|
+| admin | Admin123! | Superusuario |
+| administrador | Admin123! | administradores |
+| consultor | Consultor123! | consultores |

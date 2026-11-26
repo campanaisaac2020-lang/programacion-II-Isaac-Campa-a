@@ -12,6 +12,15 @@
     <a href="{% url 'home' %}">Inicio</a>
     <a href="{% url 'equipo_list' %}">Equipos</a>
     <a href="{% url 'categoria_list' %}">Categorías</a>
+    <a href="{% url 'marca_list' %}">Marcas</a>
+    <a href="{% url 'accesorio_list' %}">Accesorios</a>
+    {% if user.is_authenticated %}
+        <span>{{ user.username }}</span>
+        <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit">Salir</button></form>
+    {% else %}
+        <a href="{% url 'login' %}">Entrar</a>
+        <a href="{% url 'registro' %}">Registrarse</a>
+    {% endif %}
 </nav>
 {% if messages %}<ul class="messages">{% for message in messages %}<li>{{ message }}</li>{% endfor %}</ul>{% endif %}
 <main>{% block content %}{% endblock %}</main>

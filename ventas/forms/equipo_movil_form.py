@@ -10,11 +10,13 @@ class EquipoMovilForm(forms.ModelForm):
             'marca',
             'modelo',
             'categoria',
+            'fabricante',
             'anio',
             'fecha_lanzamiento',
             'almacenamiento_gb',
             'precio',
             'estado',
+            'accesorios',
             'descripcion',
         ]
         widgets = {

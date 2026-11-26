@@ -46,7 +46,7 @@ class PublicCatalogViewsTests(TestCase):
                 response = self.client.get(reverse(route))
                 self.assertEqual(response.status_code, 200)
 
-    def test_equipment_can_be_created_without_logging_in(self):
+    def test_equipment_creation_requires_login(self):
         category = Categoria.objects.create(nombre='Teléfonos')
         data = {
             'marca': 'Marca de prueba',
@@ -61,4 +61,7 @@ class PublicCatalogViewsTests(TestCase):
 
         response = self.client.post(reverse('create_equipo'), data)
 
-        self.assertRedirects(response, reverse('equipo_list'))
+        self.assertRedirects(
+            response,
+            f"{reverse('login')}?next={reverse('create_equipo')}",
+        )

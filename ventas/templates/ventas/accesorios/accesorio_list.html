@@ -1,0 +1,2 @@
+{% extends 'ventas/base.html' %}
+{% block content %}<h1>Accesorios</h1>{% if perms.ventas.add_accesorio %}<p><a href="{% url 'accesorio_create' %}">Crear accesorio</a></p>{% endif %}<ul>{% for accesorio in accesorios %}<li><a href="{% url 'accesorio_detail' accesorio.pk %}">{{ accesorio }}</a></li>{% empty %}<li>No hay accesorios.</li>{% endfor %}</ul>{% endblock %}

@@ -1,6 +1,7 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.urls import reverse
+from django.conf import settings
 
 
 class EquipoMovil(models.Model):
@@ -22,6 +23,25 @@ class EquipoMovil(models.Model):
     precio = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.01)])
     estado = models.CharField(max_length=12, choices=Estado.choices, default=Estado.DISPONIBLE)
     descripcion = models.TextField(blank=True)
+    fabricante = models.ForeignKey(
+        'Marca',
+        on_delete=models.PROTECT,
+        related_name='equipos',
+        null=True,
+        blank=True,
+    )
+    accesorios = models.ManyToManyField(
+        'Accesorio',
+        blank=True,
+        related_name='equipos',
+    )
+    creado_por = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        related_name='equipos_creados',
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         verbose_name = 'Equipo móvil'
