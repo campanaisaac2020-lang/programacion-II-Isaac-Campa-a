@@ -8,5 +8,5 @@
 <p>Precio: {{ equipo.precio }}</p>
 <p>Disponibilidad: {{ equipo.get_estado_display }}</p>
 <p>{{ equipo.descripcion }}</p>
-{% if perms.ventas.change_equipomovil %}<p><a href="{% url 'update_equipo' equipo.pk %}">Editar</a></p>{% endif %}
+{% if perms.ventas.change_equipomovil %}{% if es_administrador or equipo.creado_por == user %}<p><a href="{% url 'update_equipo' equipo.pk %}">Editar</a></p>{% endif %}{% endif %}
 {% endblock %}

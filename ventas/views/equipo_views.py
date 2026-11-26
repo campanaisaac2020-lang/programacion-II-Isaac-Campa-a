@@ -11,11 +11,26 @@ def equipo_list(request):
     equipos = EquipoMovil.objects.all()
     if pista:
         equipos = equipos.filter(Q(marca__icontains=pista)|Q(modelo__icontains=pista)|Q(descripcion__icontains=pista))
-    return render(request, 'ventas/equipos/equipo_list.html', {'equipos': equipos, 'pista': pista})
+    es_administrador = request.user.is_authenticated and (
+        request.user.is_superuser
+        or request.user.groups.filter(name='administradores').exists()
+    )
+    return render(request, 'ventas/equipos/equipo_list.html', {
+        'equipos': equipos,
+        'pista': pista,
+        'es_administrador': es_administrador,
+    })
 
 def equipo_detail(request, pk):
     equipo = get_object_or_404(EquipoMovil, pk=pk)
-    return render(request, 'ventas/equipos/equipo_detail.html', {'equipo': equipo})
+    es_administrador = request.user.is_authenticated and (
+        request.user.is_superuser
+        or request.user.groups.filter(name='administradores').exists()
+    )
+    return render(request, 'ventas/equipos/equipo_detail.html', {
+        'equipo': equipo,
+        'es_administrador': es_administrador,
+    })
 
 @login_required
 @permission_required('ventas.add_equipomovil', raise_exception=True)

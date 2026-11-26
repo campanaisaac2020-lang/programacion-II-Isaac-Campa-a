@@ -6,10 +6,25 @@ from ..forms import CategoriaForm
 from ..models import Categoria
 
 def categoria_list(request):
-    return render(request, 'ventas/categorias/categoria_list.html', {'categorias': Categoria.objects.all()})
+    es_administrador = request.user.is_authenticated and (
+        request.user.is_superuser
+        or request.user.groups.filter(name='administradores').exists()
+    )
+    return render(request, 'ventas/categorias/categoria_list.html', {
+        'categorias': Categoria.objects.all(),
+        'es_administrador': es_administrador,
+    })
+
 def categoria_detail(request, pk):
     categoria = get_object_or_404(Categoria, pk=pk)
-    return render(request, 'ventas/categorias/categoria_detail.html', {'categoria': categoria})
+    es_administrador = request.user.is_authenticated and (
+        request.user.is_superuser
+        or request.user.groups.filter(name='administradores').exists()
+    )
+    return render(request, 'ventas/categorias/categoria_detail.html', {
+        'categoria': categoria,
+        'es_administrador': es_administrador,
+    })
 @login_required
 @permission_required('ventas.add_categoria', raise_exception=True)
 def categoria_create(request):
