@@ -3,11 +3,13 @@ from ..views.marca_views import (
     marca_create,
     marca_delete,
     marca_detail,
+    marca_disponibles,
     marca_list,
     marca_update,
 )
 
 urlpatterns = [
+    path('marcas/disponibles/', marca_disponibles, name='marca_disponibles'),
     path('marcas/', marca_list, name='marca_list'),
     path('marcas/crear/', marca_create, name='marca_create'),
     path('marcas/<int:pk>/', marca_detail, name='marca_detail'),

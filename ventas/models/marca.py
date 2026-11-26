@@ -6,6 +6,8 @@ class Marca(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
     pais_origen = models.CharField(max_length=100)
     fundada = models.PositiveSmallIntegerField()
+    descripcion = models.TextField(blank=True)
+    disponible = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = 'Marca'

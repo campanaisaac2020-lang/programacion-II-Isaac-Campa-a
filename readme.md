@@ -7,6 +7,7 @@ Aplicación web desarrollada con Django para administrar celulares, categorías,
 - Categoría — Equipo móvil: ForeignKey, una categoría contiene varios equipos.
 - Marca — Equipo móvil: ForeignKey, una marca fabrica varios equipos.
 - Equipo móvil — Accesorio: ManyToMany.
+- Marca incluye descripción y estado de disponibilidad para venta.
 - Los registros tienen `creado_por` para aplicar propiedad.
 
 ## Levantar el proyecto

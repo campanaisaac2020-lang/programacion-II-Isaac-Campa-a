@@ -49,6 +49,7 @@ class PublicCatalogViewsTests(TestCase):
             'equipo_list',
             'categoria_list',
             'marca_list',
+            'marca_disponibles',
             'accesorio_list',
         ):
             with self.subTest(route=route):
@@ -170,18 +171,51 @@ class MarcaCrudTests(TestCase):
     def test_create_and_update_marca(self):
         create_response = self.client.post(
             reverse('marca_create'),
-            {'nombre': 'OnePlus', 'pais_origen': 'China', 'fundada': 2013},
+            {
+                'nombre': 'OnePlus',
+                'pais_origen': 'China',
+                'fundada': 2013,
+                'descripcion': 'Teléfonos inteligentes.',
+                'disponible': 'on',
+            },
         )
         marca = Marca.objects.get(nombre='OnePlus')
         update_response = self.client.post(
             reverse('marca_update', args=[marca.pk]),
-            {'nombre': 'OnePlus Mobile', 'pais_origen': 'China', 'fundada': 2013},
+            {
+                'nombre': 'OnePlus Mobile',
+                'pais_origen': 'China',
+                'fundada': 2013,
+                'descripcion': 'Equipos para venta.',
+                'disponible': 'on',
+            },
         )
 
         self.assertRedirects(create_response, reverse('marca_list'))
         self.assertRedirects(update_response, reverse('marca_detail', args=[marca.pk]))
         marca.refresh_from_db()
         self.assertEqual(marca.nombre, 'OnePlus Mobile')
+        self.assertEqual(marca.descripcion, 'Equipos para venta.')
+        self.assertTrue(marca.disponible)
+
+    def test_available_brands_page_hides_unavailable_brands(self):
+        Marca.objects.create(
+            nombre='Disponible',
+            pais_origen='Ecuador',
+            fundada=2000,
+            disponible=True,
+        )
+        Marca.objects.create(
+            nombre='Descatalogada',
+            pais_origen='Ecuador',
+            fundada=2000,
+            disponible=False,
+        )
+
+        response = self.client.get(reverse('marca_disponibles'))
+
+        self.assertContains(response, 'Disponible')
+        self.assertNotContains(response, 'Descatalogada')
 
     def test_delete_marca_requires_post(self):
         marca = Marca.objects.create(

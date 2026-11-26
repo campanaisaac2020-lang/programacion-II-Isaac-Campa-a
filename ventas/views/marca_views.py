@@ -7,7 +7,17 @@ from ..models import Marca
 
 
 def marca_list(request):
-    return render(request, 'ventas/marcas/marca_list.html', {'marcas': Marca.objects.all()})
+    return render(request, 'ventas/marcas/marca_list.html', {
+        'marcas': Marca.objects.all(),
+        'titulo': 'Administrar marcas',
+    })
+
+
+def marca_disponibles(request):
+    return render(request, 'ventas/marcas/marca_list.html', {
+        'marcas': Marca.objects.filter(disponible=True),
+        'titulo': 'Marcas disponibles para venta',
+    })
 
 
 def marca_detail(request, pk):

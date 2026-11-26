@@ -15,9 +15,9 @@ class EquipoMovilAdmin(admin.ModelAdmin):
 
 @admin.register(Marca)
 class MarcaAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'pais_origen', 'fundada')
-    list_filter = ('pais_origen',)
-    search_fields = ('nombre', 'pais_origen')
+    list_display = ('nombre', 'pais_origen', 'fundada', 'disponible')
+    list_filter = ('pais_origen', 'disponible')
+    search_fields = ('nombre', 'pais_origen', 'descripcion')
 
 @admin.register(Accesorio)
 class AccesorioAdmin(admin.ModelAdmin):

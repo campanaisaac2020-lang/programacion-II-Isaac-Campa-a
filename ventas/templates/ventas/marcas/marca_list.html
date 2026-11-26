@@ -1,2 +1,19 @@
 {% extends 'ventas/base.html' %}
-{% block content %}<h1>Marcas</h1>{% if perms.ventas.add_marca %}<p><a href="{% url 'marca_create' %}">Registrar marca</a></p>{% endif %}<ul>{% for marca in marcas %}<li><a href="{% url 'marca_detail' marca.pk %}">{{ marca }}</a>{% if perms.ventas.change_marca %} — <a href="{% url 'marca_update' marca.pk %}">Editar</a>{% endif %}{% if perms.ventas.delete_marca %} — <a href="{% url 'marca_delete' marca.pk %}">Eliminar</a>{% endif %}</li>{% empty %}<li>No hay marcas.</li>{% endfor %}</ul>{% endblock %}
+{% block content %}
+<h1>{{ titulo }}</h1>
+<nav>
+    {% if perms.ventas.add_marca %}<a href="{% url 'marca_create' %}">Agregar marca</a>{% endif %}
+    <a href="{% url 'marca_disponibles' %}">Marcas disponibles</a>
+    <a href="{% url 'marca_list' %}">Administrar marcas</a>
+</nav>
+<ul>
+    {% for marca in marcas %}
+    <li>
+        <a href="{% url 'marca_detail' marca.pk %}">{{ marca }}</a>
+        — {% if marca.disponible %}Disponible para venta{% else %}No disponible{% endif %}
+        {% if perms.ventas.change_marca %} — <a href="{% url 'marca_update' marca.pk %}">Editar</a>{% endif %}
+        {% if perms.ventas.delete_marca %} — <a href="{% url 'marca_delete' marca.pk %}">Eliminar</a>{% endif %}
+    </li>
+    {% empty %}<li>No hay marcas para mostrar.</li>{% endfor %}
+</ul>
+{% endblock %}

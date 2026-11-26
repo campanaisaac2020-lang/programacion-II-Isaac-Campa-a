@@ -50,16 +50,21 @@ class Command(BaseCommand):
         consultor.groups.set([consultores])
 
         marcas = []
-        for nombre, pais, fundada in [
-            ('Samsung', 'Corea del Sur', 1938),
-            ('Apple', 'Estados Unidos', 1976),
-            ('Xiaomi', 'China', 2010),
-            ('Motorola', 'Estados Unidos', 1928),
-            ('Honor', 'China', 2013),
+        for nombre, pais, fundada, descripcion, disponible in [
+            ('Samsung', 'Corea del Sur', 1938, 'Fabricante de teléfonos y dispositivos electrónicos.', True),
+            ('Apple', 'Estados Unidos', 1976, 'Diseña teléfonos y productos electrónicos.', True),
+            ('Xiaomi', 'China', 2010, 'Marca de teléfonos y productos inteligentes.', True),
+            ('Motorola', 'Estados Unidos', 1928, 'Fabricante histórico de equipos de comunicación.', False),
+            ('Honor', 'China', 2013, 'Marca de teléfonos y dispositivos inteligentes.', True),
         ]:
-            marcas.append(Marca.objects.get_or_create(
+            marcas.append(Marca.objects.update_or_create(
                 nombre=nombre,
-                defaults={'pais_origen': pais, 'fundada': fundada},
+                defaults={
+                    'pais_origen': pais,
+                    'fundada': fundada,
+                    'descripcion': descripcion,
+                    'disponible': disponible,
+                },
             )[0])
 
         accesorios = []
