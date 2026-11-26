@@ -1,0 +1,2 @@
+{% extends 'ventas/base.html' %}
+{% block content %}<h1>{{ accesorio }}</h1><p>Precio: {{ accesorio.precio }}</p><p>Disponible: {{ accesorio.disponible|yesno:"Sí,No" }}</p><h2>Equipos</h2><ul>{% for equipo in accesorio.equipos.all %}<li><a href="{% url 'equipo_detail' equipo.pk %}">{{ equipo }}</a></li>{% empty %}<li>Sin equipos</li>{% endfor %}</ul>{% endblock %}

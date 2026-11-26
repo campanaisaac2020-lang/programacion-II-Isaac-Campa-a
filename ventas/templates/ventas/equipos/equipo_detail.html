@@ -1,0 +1,15 @@
+{% extends 'ventas/base.html' %}
+{% block content %}
+<h1>{{ equipo }}</h1>
+<p>Marca: {{ equipo.marca }}</p>
+{% if equipo.categoria %}<p>Categoría: <a href="{% url 'categoria_detail' equipo.categoria.pk %}">{{ equipo.categoria }}</a></p>{% endif %}
+{% if equipo.fabricante %}<p>Fabricante: <a href="{% url 'marca_detail' equipo.fabricante.pk %}">{{ equipo.fabricante }}</a></p>{% endif %}
+<h2>Accesorios</h2>
+<ul>{% for accesorio in equipo.accesorios.all %}<li><a href="{% url 'accesorio_detail' accesorio.pk %}">{{ accesorio }}</a></li>{% empty %}<li>Sin accesorios</li>{% endfor %}</ul>
+<p>Año: {{ equipo.anio }}</p>
+<p>Almacenamiento: {{ equipo.almacenamiento_gb }} GB</p>
+<p>Precio: {{ equipo.precio }}</p>
+<p>Disponibilidad: {{ equipo.get_estado_display }}</p>
+<p>{{ equipo.descripcion }}</p>
+{% if perms.ventas.change_equipomovil %}{% if es_administrador or equipo.creado_por == user %}<p><a href="{% url 'update_equipo' equipo.pk %}">Editar</a></p>{% endif %}{% endif %}
+{% endblock %}

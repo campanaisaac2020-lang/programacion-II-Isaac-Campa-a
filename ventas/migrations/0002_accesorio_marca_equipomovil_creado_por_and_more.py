@@ -1,0 +1,115 @@
+import django.core.validators
+import django.db.models.deletion
+from django.conf import settings
+from django.db import migrations, models
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('ventas', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+    ]
+
+    operations = [
+        migrations.CreateModel(
+            name='Accesorio',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('nombre', models.CharField(max_length=100)),
+                ('precio', models.DecimalField(decimal_places=2, max_digits=8)),
+                ('disponible', models.BooleanField(default=True)),
+            ],
+            options={
+                'verbose_name': 'Accesorio',
+                'verbose_name_plural': 'Accesorios',
+                'ordering': ['nombre'],
+            },
+        ),
+        migrations.CreateModel(
+            name='Marca',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('nombre', models.CharField(max_length=100, unique=True)),
+                ('pais_origen', models.CharField(max_length=100)),
+                ('fundada', models.PositiveSmallIntegerField()),
+            ],
+            options={
+                'verbose_name': 'Marca',
+                'verbose_name_plural': 'Marcas',
+                'ordering': ['nombre'],
+            },
+        ),
+        migrations.AddField(
+            model_name='equipomovil',
+            name='creado_por',
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='equipos_creados', to=settings.AUTH_USER_MODEL),
+        ),
+        migrations.AddField(
+            model_name='equipomovil',
+            name='estado',
+            field=models.CharField(choices=[('nuevo', 'Nuevo'), ('seminuevo', 'Seminuevo'), ('agotado', 'Agotado')], default='nuevo', max_length=12),
+        ),
+        migrations.AddField(
+            model_name='equipomovil',
+            name='fecha_lanzamiento',
+            field=models.DateField(blank=True, null=True),
+        ),
+        migrations.AlterField(
+            model_name='equipomovil',
+            name='almacenamiento_gb',
+            field=models.PositiveSmallIntegerField(validators=[django.core.validators.MinValueValidator(1)]),
+        ),
+        migrations.AlterField(
+            model_name='equipomovil',
+            name='stock',
+            field=models.PositiveIntegerField(default=0),
+        ),
+        migrations.AddField(
+            model_name='equipomovil',
+            name='accesorios',
+            field=models.ManyToManyField(blank=True, related_name='equipos', to='ventas.accesorio'),
+        ),
+        migrations.CreateModel(
+            name='Categoria',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('nombre', models.CharField(max_length=100, unique=True)),
+                ('descripcion', models.TextField(blank=True)),
+                ('creado_por', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='categorias_creadas', to=settings.AUTH_USER_MODEL)),
+            ],
+            options={
+                'verbose_name': 'Categoría',
+                'verbose_name_plural': 'Categorías',
+                'ordering': ['nombre'],
+            },
+        ),
+        migrations.AddField(
+            model_name='equipomovil',
+            name='categoria',
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='equipos', to='ventas.categoria'),
+        ),
+        migrations.AddField(
+            model_name='equipomovil',
+            name='fabricante',
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='equipos', to='ventas.marca'),
+        ),
+        migrations.CreateModel(
+            name='Venta',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('cliente', models.CharField(max_length=150)),
+                ('fecha', models.DateField()),
+                ('cantidad', models.PositiveSmallIntegerField(validators=[django.core.validators.MinValueValidator(1)])),
+                ('total', models.DecimalField(decimal_places=2, max_digits=12)),
+                ('estado', models.CharField(choices=[('pendiente', 'Pendiente'), ('pagada', 'Pagada'), ('cancelada', 'Cancelada')], default='pendiente', max_length=10)),
+                ('creado_por', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='ventas_creadas', to=settings.AUTH_USER_MODEL)),
+                ('equipo', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='ventas', to='ventas.equipomovil')),
+            ],
+            options={
+                'verbose_name': 'Venta',
+                'verbose_name_plural': 'Ventas',
+                'ordering': ['-fecha'],
+            },
+        ),
+    ]

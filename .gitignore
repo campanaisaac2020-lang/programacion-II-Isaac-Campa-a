@@ -1,13 +1,11 @@
-<<<<<<< HEAD
+venv/
 .venv/
 __pycache__/
-=======
-# ============================================================
-#  .gitignore - Programación II
-#  Proyectos y subproyectos: Python | Django | Odoo
-#  Los patrones sin "/" inicial aplican en TODAS las subcarpetas
-# ============================================================
- 
+*.py[cod]
+db.sqlite3
+.env
+.vscode/
+.idea/
 # ------------------------------------------------------------
 # PYTHON
 # ------------------------------------------------------------
@@ -151,4 +149,3 @@ $RECYCLE.BIN/
 tmp/
 temp/
 node_modules/
->>>>>>> origin/main
