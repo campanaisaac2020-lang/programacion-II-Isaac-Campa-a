@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Group, Permission, User
 from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
@@ -65,3 +66,63 @@ class PublicCatalogViewsTests(TestCase):
             response,
             f"{reverse('login')}?next={reverse('create_equipo')}",
         )
+
+
+class OwnershipPermissionTests(TestCase):
+    def setUp(self):
+        self.consultores = Group.objects.create(name='consultores_test')
+        permissions = Permission.objects.filter(
+            content_type__app_label='ventas',
+            codename__in=[
+                'add_categoria',
+                'change_categoria',
+                'delete_categoria',
+                'add_equipomovil',
+                'change_equipomovil',
+                'delete_equipomovil',
+            ],
+        )
+        self.consultores.permissions.set(permissions)
+
+        self.owner = User.objects.create_user(username='owner', password='test-pass')
+        self.other = User.objects.create_user(username='other', password='test-pass')
+        self.owner.groups.add(self.consultores)
+        self.other.groups.add(self.consultores)
+        self.categoria = Categoria.objects.create(
+            nombre='Teléfonos',
+            creado_por=self.owner,
+        )
+
+    def test_owner_can_edit_category(self):
+        self.client.force_login(self.owner)
+
+        response = self.client.post(
+            reverse('categoria_update', args=[self.categoria.pk]),
+            {'nombre': 'Celulares', 'descripcion': 'Actualizada'},
+        )
+
+        self.assertRedirects(response, reverse('categoria_list'))
+        self.categoria.refresh_from_db()
+        self.assertEqual(self.categoria.nombre, 'Celulares')
+
+    def test_other_consultant_cannot_edit_or_delete_category(self):
+        self.client.force_login(self.other)
+
+        edit_response = self.client.get(
+            reverse('categoria_update', args=[self.categoria.pk])
+        )
+        delete_response = self.client.post(
+            reverse('categoria_delete', args=[self.categoria.pk])
+        )
+
+        self.assertEqual(edit_response.status_code, 403)
+        self.assertEqual(delete_response.status_code, 403)
+        self.assertTrue(Categoria.objects.filter(pk=self.categoria.pk).exists())
+
+    def test_category_actions_are_hidden_for_non_owner(self):
+        self.client.force_login(self.other)
+
+        response = self.client.get(reverse('categoria_list'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, reverse('categoria_update', args=[self.categoria.pk]))
